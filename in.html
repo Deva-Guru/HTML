@@ -16,7 +16,7 @@
     <style>
         /* Reference UI CSS Variables - Warm Dark Orange Theme */
         :root {
-            --bg-dark: #0d0602; 
+            --bg-dark: #0a0401; 
             --bg-radial: #301100;
             --primary-glow: #ff5500; 
             --secondary-glow: #ff8c00; 
@@ -41,11 +41,10 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
-            background-image: radial-gradient(circle at 75% 40%, var(--bg-radial) 0%, var(--bg-dark) 60%);
             color: var(--text-main);
             line-height: 1.6;
             position: relative;
+            background-color: transparent; /* Handled by bg-canvas now */
         }
 
         h1, h2, h3, h4, h5, h6, .nav-logo { font-family: 'Outfit', sans-serif; }
@@ -53,26 +52,50 @@
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
 
-        /* Floating Gradient Blobs Background */
-        .blob-container {
+        /* --- ADVANCED BACKGROUND PHOTO & GLOW EFFECTS --- */
+        .bg-canvas {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1; overflow: hidden; pointer-events: none;
+            background-color: var(--bg-dark);
         }
 
+        /* Abstract Dark Photo Background */
+        .bg-photo {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://images.unsplash.com/photo-1604328698692-f76ea9498e76?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+            opacity: 0.18;
+            mix-blend-mode: lighten; /* Blends beautifully with the dark orange */
+            filter: contrast(1.2) sepia(0.3) hue-rotate(-20deg);
+        }
+
+        /* Dark Gradient Overlay to ensure text readability */
+        .bg-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 75% 40%, rgba(48, 17, 0, 0.6) 0%, rgba(10, 4, 1, 0.95) 80%);
+        }
+
+        /* Glowing Light Orbs */
         .blob {
-            position: absolute; border-radius: 50%; filter: blur(120px);
-            opacity: 0.4; animation: float 20s infinite ease-in-out alternate;
+            position: absolute; border-radius: 50%; filter: blur(100px);
+            opacity: 0.5; animation: float 20s infinite ease-in-out alternate;
         }
 
         .blob-1 {
-            top: 20%; right: 10%; width: 40vw; height: 40vw;
-            background: radial-gradient(circle, rgba(255, 85, 0, 0.2), transparent 70%);
+            top: 15%; right: 5%; width: 45vw; height: 45vw;
+            background: radial-gradient(circle, rgba(255, 85, 0, 0.25), transparent 70%);
         }
 
         .blob-2 {
-            bottom: -10%; left: -10%; width: 50vw; height: 50vw;
-            background: radial-gradient(circle, rgba(255, 140, 0, 0.15), transparent 70%);
+            bottom: -10%; left: -5%; width: 50vw; height: 50vw;
+            background: radial-gradient(circle, rgba(255, 140, 0, 0.2), transparent 70%);
             animation-delay: -5s;
+        }
+
+        .blob-3 {
+            top: 40%; left: 30%; width: 35vw; height: 35vw;
+            background: radial-gradient(circle, rgba(255, 106, 0, 0.15), transparent 70%);
+            animation-duration: 25s;
+            animation-delay: -10s;
         }
 
         @keyframes float {
@@ -80,6 +103,7 @@
             50% { transform: translate(5%, 10%) scale(1.1); }
             100% { transform: translate(-5%, -5%) scale(0.9); }
         }
+        /* --- END BACKGROUND EFFECTS --- */
 
         /* Glassmorphism Panel Utility */
         .glass-panel {
@@ -109,7 +133,7 @@
             letter-spacing: 1px; position: relative;
         }
 
-        /* Navbar - Pill Style from Reference */
+        /* Navbar - Pill Style */
         .nav-wrapper {
             position: fixed; top: 0; width: 100%; padding: 2rem 0;
             z-index: 1000; display: flex; justify-content: center; transition: var(--transition);
@@ -119,10 +143,10 @@
 
         .nav-pill {
             display: flex; justify-content: space-between; align-items: center;
-            background: rgba(20, 10, 5, 0.6); backdrop-filter: blur(16px);
+            background: rgba(20, 10, 5, 0.7); backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border); border-radius: 50px;
             padding: 10px 20px 10px 30px; width: 90%; max-width: 1200px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6); transition: var(--transition);
         }
 
         .nav-logo { font-size: 1.6rem; font-weight: 700; cursor: pointer; color: #fff; letter-spacing: -0.5px; }
@@ -144,7 +168,7 @@
 
         .mobile-menu-btn { display: none; font-size: 1.5rem; color: var(--text-main); cursor: pointer; }
 
-        /* Hero Section - Matched to Reference */
+        /* Hero Section */
         #home { min-height: 100vh; display: flex; align-items: center; padding-top: 150px; }
         .hero-content { display: flex; align-items: center; justify-content: space-between; width: 100%; position: relative; }
         
@@ -194,6 +218,20 @@
         /* Hero Right Image & Arch */
         .hero-visuals { flex: 1; display: flex; justify-content: center; align-items: center; position: relative; }
         
+        /* Center Backlight Glow Effect behind image */
+        .hero-visuals::before {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); width: 350px; height: 350px;
+            background: var(--primary-glow); border-radius: 50%;
+            filter: blur(100px); opacity: 0.45; z-index: 0;
+            animation: pulse-glow 4s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% { opacity: 0.3; transform: translate(-50%, -50%) scale(0.9); }
+            100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.1); }
+        }
+        
         .arch-container {
             width: 400px; height: 550px; background: rgba(255,255,255,0.02);
             border-radius: 250px 250px 20px 20px; position: relative;
@@ -231,7 +269,7 @@
         @keyframes spin-slow { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
         @keyframes float-icon { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(-15px) rotate(5deg); } }
 
-        /* General Section Adjustments for New Theme */
+        /* General Section Adjustments */
         .roles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
         .role-card { text-align: center; padding: 2rem 1.5rem; cursor: pointer; }
         .role-card i { font-size: 2.5rem; color: var(--primary-glow); margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(255, 85, 0, 0.4)); transition: var(--transition); }
@@ -257,7 +295,7 @@
         /* Projects Section */
         .project-card { display: flex; overflow: hidden; max-width: 1000px; margin: 0 auto; padding: 0; }
         .project-img { flex: 1; min-height: 350px; background: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80') center/cover; position: relative; }
-        .project-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(20,10,5,0.2), var(--bg-dark)); }
+        .project-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(20,10,5,0.4), transparent 50%, var(--bg-dark)); }
         .project-content { flex: 1.2; padding: 3.5rem; display: flex; flex-direction: column; justify-content: center; }
         .project-title { font-size: 2.2rem; color: var(--primary-glow); margin-bottom: 1rem; }
         .project-desc { color: var(--text-muted); margin-bottom: 2rem; font-size: 1.1rem; }
@@ -326,17 +364,17 @@
         
         .contact-form { padding: 3rem; display: flex; flex-direction: column; gap: 1.5rem; }
         .form-control {
-            width: 100%; padding: 1.2rem 1.5rem; background: rgba(0, 0, 0, 0.2); border: 1px solid var(--glass-border);
+            width: 100%; padding: 1.2rem 1.5rem; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--glass-border);
             border-radius: 12px; color: var(--text-main); font-family: inherit; font-size: 1rem; transition: var(--transition); outline: none;
         }
-        .form-control:focus { border-color: var(--primary-glow); box-shadow: 0 0 15px rgba(255, 85, 0, 0.2); background: rgba(255, 85, 0, 0.02); }
+        .form-control:focus { border-color: var(--primary-glow); box-shadow: 0 0 15px rgba(255, 85, 0, 0.2); background: rgba(255, 85, 0, 0.05); }
         textarea.form-control { resize: vertical; min-height: 160px; }
         .btn-submit { width: 100%; padding: 1.2rem; font-size: 1.2rem; margin-top: 1rem; background: var(--primary-glow); color: #fff; border:none; border-radius: 30px; font-family: 'Outfit', sans-serif; font-weight: 600; cursor: pointer; transition: var(--transition); }
         .btn-submit:hover { background: #ff6a00; box-shadow: var(--glow-shadow); }
 
         /* Footer */
         footer {
-            background: rgba(20, 10, 5, 0.6); backdrop-filter: blur(20px);
+            background: rgba(15, 6, 2, 0.8); backdrop-filter: blur(20px);
             padding: 4rem 0 2rem; border-top: 1px solid rgba(255, 85, 0, 0.2); text-align: center; position: relative; overflow: hidden;
         }
         .footer-content { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; margin-bottom: 2rem; }
@@ -355,6 +393,8 @@
         @keyframes scroll-text { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
         .footer-bottom { color: var(--text-muted); font-size: 0.95rem; display: flex; flex-direction: column; gap: 0.5rem; margin-top: 2rem; }
         .credit { color: var(--primary-glow); font-family: 'Outfit', sans-serif; letter-spacing: 1px; }
+        .credit a { color: inherit; text-decoration: none; transition: var(--transition); }
+        .credit a:hover { color: var(--text-main); text-shadow: 0 0 10px rgba(255,255,255,0.5); }
 
         /* Floating WhatsApp Button */
         .whatsapp-float {
@@ -384,7 +424,7 @@
         @media (max-width: 768px) {
             .container { padding: 0 1.5rem; }
             .nav-pill { padding: 10px 20px; width: 100%; border-radius: 20px; }
-            .nav-links, .nav-btn-download { display: none; } /* Hide on mobile for toggle */
+            .nav-links, .nav-btn-download { display: none; }
             .nav-links.active {
                 display: flex; position: absolute; top: 100%; left: 0; width: 100%;
                 background: rgba(20, 10, 5, 0.98); backdrop-filter: blur(20px);
@@ -405,16 +445,19 @@
 </head>
 <body>
 
-    <!-- Parallax Floating Background Blobs -->
-    <div class="blob-container" id="parallax-bg">
+    <!-- Parallax Floating Background Photo, Gradient & Light Orbs -->
+    <div class="bg-canvas">
+        <div class="bg-photo"></div>
+        <div class="bg-overlay"></div>
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
     </div>
 
     <!-- Navigation - Pill Shape -->
     <div class="nav-wrapper" id="navbar">
         <nav class="nav-pill">
-            <div class="nav-logo" onclick="window.scrollTo(0,0)">noah<span>.</span></div> <!-- Reference aesthetic brand naming placeholder, change to devaguru if preferred -->
+            <div class="nav-logo" onclick="window.open('https://github.com/Deva-Guru', '_blank')">Deva<span>.K</span></div> 
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
@@ -422,7 +465,7 @@
                 <li><a href="#education">Education</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <a href="#" class="nav-btn-download">
+            <a href="https://drive.google.com/file/d/1vc8gG5xnZYbZMRnltY1-Q4pYX7gBbDX6/view?usp=sharing" target="_blank" class="nav-btn-download">
                 <i class="fas fa-file-download"></i> Download Resume
             </a>
             <div class="mobile-menu-btn">
@@ -431,7 +474,7 @@
         </nav>
     </div>
 
-    <!-- Hero Section (Matched to Reference) -->
+    <!-- Hero Section -->
     <section id="home" class="container">
         <div class="hero-content">
             
@@ -444,8 +487,9 @@
                 <p class="hero-subtitle">Always Learning. Always Building. Always Growing. I specialize in hardware, software, and creative editing.</p>
                 
                 <div class="hero-actions">
-                    <button class="btn-hire">Hire me</button>
-                    <button class="btn-icon"><i class="far fa-envelope"></i></button>
+                    <button class="btn-hire" onclick="window.open('https://wa.me/918870001561?text=Hello%20Devaguru%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20connect.', '_blank')">Hire me</button>
+                    <a href="https://github.com/Deva-Guru" target="_blank" class="btn-icon" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="#contact" class="btn-icon" title="Contact Me"><i class="far fa-envelope"></i></a>
                 </div>
 
                 <!-- Overlapping Glass Quote Card -->
@@ -576,7 +620,7 @@
                 </div>
                 <div class="project-links">
                     <a href="#" class="btn-glow"><i class="fas fa-external-link-alt"></i> Live Preview</a>
-                    <a href="#" class="btn-glow"><i class="fab fa-github"></i> GitHub Source</a>
+                    <a href="https://github.com/Deva-Guru" target="_blank" class="btn-glow"><i class="fab fa-github"></i> GitHub Source</a>
                 </div>
             </div>
         </div>
@@ -720,7 +764,7 @@
 
         <div class="footer-bottom container">
             <p>&copy; 2026 Devaguru K. All Rights Reserved.</p>
-            <p class="credit">Developed by Deva</p>
+            <p class="credit"><a href="https://deva-guru.github.io/HTML/in.html" target="_blank">Developed by Deva</a></p>
         </div>
     </footer>
 
@@ -855,6 +899,17 @@
                 card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
                 card.style.boxShadow = `0 10px 40px rgba(0, 0, 0, 0.5)`;
             });
+        });
+
+        // 8. Parallax Animation for Light Effects
+        document.addEventListener('mousemove', (e) => {
+            const blobs = document.querySelectorAll('.blob');
+            const x = (window.innerWidth - e.pageX * 2) / 90;
+            const y = (window.innerHeight - e.pageY * 2) / 90;
+            
+            if(blobs[0]) blobs[0].style.transform = `translate(${x}px, ${y}px)`;
+            if(blobs[1]) blobs[1].style.transform = `translate(${-x * 1.5}px, ${-y * 1.5}px)`;
+            if(blobs[2]) blobs[2].style.transform = `translate(${x * 0.5}px, ${-y * 0.5}px)`;
         });
 
     </script>
