@@ -68,7 +68,7 @@ Because SanVideoHub is a completely serverless, single-file application, install
 1. Clone the repository:  
    git clone 
 
-\[ https://github.com/A-Santhosh-Hub/WEB_APPLICATION-S/blob/main/SanVideoHub/in.html \]
+[ https://github.com/Deva-Guru/HTML/blob/main/Project/SanVideoHub/in.html]
 
 2. Navigate to the project directory:  
    cd SanVideoHub
