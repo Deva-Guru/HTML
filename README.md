@@ -13,6 +13,6 @@ My HTML Project:
 # 4. San X Vs code on online text editer tool --- [ https://deva-guru.github.io/HTML/Project/SanCode/in]
 ![image alt](https://github.com/A-Santhosh-Hub/WEB_APPLICATION-S/blob/main/SanXVScode/SanxVS.png)
 
-# 5. SanVideoHub - Your Personal Video Collection --- [https://a-santhosh-hub.github.io/in/Project/SanVideoHub/in.html]
+# 5. SanVideoHub - Your Personal Video Collection --- [https://deva-guru.github.io/HTML/Project/SanVideoHub/in]
 ![Viewer Screenshot](https://github.com/A-Santhosh-Hub/WEB_APPLICATION-S/blob/main/SanVideoHub/SanVideoHub.png)
 
