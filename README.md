@@ -16,3 +16,6 @@ My HTML Project:
 # 5. SanVideoHub - Your Personal Video Collection --- [https://deva-guru.github.io/HTML/Project/SanVideoHub/in]
 ![Viewer Screenshot](https://github.com/A-Santhosh-Hub/WEB_APPLICATION-S/blob/main/SanVideoHub/SanVideoHub.png)
 
+# 6. SanMap - SMART FUEL ROUTE PLANNER -- [ https://a-santhosh-hub.github.io/in/Project/SanMap/in]
+![Viewer Screenshot](https://github.com/A-Santhosh-Hub/WEB_APPLICATION-S/blob/main/SMART-FUEL-ROUTE-PLANNER/Location.png)
+The SanStudio is Now working, wait 🫸 for Update!!!
